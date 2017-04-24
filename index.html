@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>TMDB Watchlist</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Roboto" rel="stylesheet">
+</head>
+
+<body>
+    <div class="spinner"></div>
+    <div id="app">
+        <h1>TMDB Watchlist</h1>
+        <form id=searchForm>
+            <input id=searchInput type="text" value="" placeholder="search a movie!" />
+            <button type="submit" value="Submit" class="submit-button"> 🔎 </button>
+            <br>
+            <button id=getTrendingMovies class="category-button" type="button">Now Playing</button>
+            <button id=getSavedMovies class="category-button" type="button">Saved Movies</button>
+        </form>
+
+        <div id="movieInfo"></div>
+
+        <!-- <img id="logo" src="https://www.themoviedb.org/assets/static_cache/bb45549239e25f1770d5f76727bcd7c0/images/v4/logos/408x161-powered-by-rectangle-blue.png" alt="The Movie Database Logo"> -->
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="js/index.js"></script>
+
+</body>
+
+</html>

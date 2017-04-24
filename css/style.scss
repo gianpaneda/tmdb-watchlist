@@ -1,0 +1,205 @@
+$primary-color: #e8a318;
+$accent-color: #4cb1ff;
+$header-text: 'Poppins', sans-serif;
+$body-text: 'Roboto', sans-serif;
+@mixin flex-center-container() {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+@mixin min-margin() {
+    margin: 10px;
+}
+
+body,
+html {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: $primary-color;
+}
+
+h1 {
+    @include min-margin();
+    font-family: $header-text;
+    font-size: 36px;   
+}
+
+.section-title {
+    @include min-margin();
+    font-family: $header-text;
+}
+
+.no-movies-saved {
+        font-size: 20px;
+        text-align: center;
+        font-family: $body-text;
+}
+
+#app {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#searchForm {
+    display: flex;
+    align-items: center;
+}
+
+#movieInfo {
+    @include flex-center-container();
+    flex-direction: row;
+    max-width: 50%;
+    // width: 1040px;
+}
+
+#searchInput {
+    font-family: $header-text;
+    font-size: 22px;
+    font-weight: 800;
+    vertical-align: middle;
+    border-style: none;
+    width: 300px;
+    height: 50px;
+    padding: 10px;
+    @include min-margin();
+}
+
+.submit-button {
+    background-color: white;
+    vertical-align: middle;
+    border-style: none;
+    font-size: 14px;
+    height: 70px;
+    width: 50px;
+    // padding: 18px 14px 14px 14px;
+    margin: 0 5px 0 -10px;
+}
+
+.category-button {
+    color: #ffffff;
+    background-color: $accent-color;
+    font-family: $body-text;
+    font-size: 14px;
+    height: 50px;
+    width: 150px;
+    padding: 15px;
+    margin: 10px 5px;
+    border-style: none;
+}
+
+.category-button:last-child {
+    margin: 10px 10px 10px 5px;
+}
+
+.moviePanel {
+    @include min-margin();
+    display: flex;
+    font-family: $body-text;
+    background-color: #ffffff;
+    width: 800px;
+    height: 250px;
+}
+
+.movieTitle {
+    font-family: $header-text;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 0;
+    width: 85%;
+    /*background-color: #f3f3f3;*/
+}
+
+.rating {
+    font-size: 20px;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    width: 15%;
+}
+
+.movieText {
+    min-width: 600px;
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.save-button {
+    color: #000000;
+    background-color: #ffffff;
+    border: none;
+    font-size: 35px;
+    height: 50px;
+    width: 50px;
+    margin: auto 0 0 auto;
+}
+
+.remove-button {
+    @extend .save-button;
+}
+
+.placeholder {
+    background-color: #e2dcce;
+    min-height: 250px;
+    min-width: 166.66px;
+}
+
+.poster {
+    height: 250px;
+    width: auto;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.loader {
+    background-color: blue;
+    height: 1000px;
+    width: 1000px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    margin: 100px auto;
+    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+    animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+    0% {
+        -webkit-transform: perspective(120px);
+    }
+
+    50% {
+        -webkit-transform: perspective(120px) rotateY(180deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+    }
+}
+@keyframes sk-rotateplane {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+
+    50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+}
