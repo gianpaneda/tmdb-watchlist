@@ -12,13 +12,44 @@
     <div class="spinner"></div>
     <div id="app">
         <h1>TMDB Watchlist</h1>
-        <form id=searchForm>
-            <input id=searchInput type="text" value="" placeholder="search a movie!" />
+        <form id="searchForm">
+            <input id="searchInput" type="text" value="" placeholder="search a movie!" />
             <button type="submit" value="Submit" class="submit-button"> 🔎 </button>
             <br>
-            <button id=getTrendingMovies class="category-button" type="button">Now Playing</button>
-            <button id=getSavedMovies class="category-button" type="button">Saved Movies</button>
+            <button id="getNowPlaying" class="category-button" type="button">Now Playing</button>
+            <button id="getSavedMovies" class="category-button" type="button">Saved Movies</button>
         </form>
+
+        <select id="genres" class="" name="genre">
+            <option value="" disabled selected>Select genre</option>
+            <option value="28">Action</option>
+            <option value="12">Adventure</option>
+            <option value="16">Animation</option>
+            <option value="35">Comedy</option>
+            <option value="80">Crime</option>
+            <option value="99">Documentary</option>
+            <option value="18">Drama</option>
+            <option value="10751">Family</option>
+            <option value="14">Fantasy</option>
+            <option value="36">History</option>
+            <option value="27">Horror</option>
+            <option value="10402">Music</option>
+            <option value="9648">Mystery</option>
+            <option value="10749">Romance</option>
+            <option value="878">Science Fiction</option>
+            <option value="10770">TV Movie</option>
+            <option value="53">Thriller</option>
+            <option value="10752">War</option>
+            <option value="37">Western</option>
+        </select>
+
+        <!-- show the download link in the saved movie div -->
+
+        <div id="main">
+            <span>Content of #main div goes here</span>
+        </div>
+
+        <a href="#" id="downloadLink">Download the inner html of #main</a>
 
         <div id="movieInfo"></div>
 
