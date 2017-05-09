@@ -6,8 +6,7 @@ $(window).on('load', function() {
 
 //API KEY bf39974e4cd838de19bec9f9e381cb10
 
-//get movies by genre
-//page numbers for searches, now playing, and movies by genre
+//export text file only in saved movies state
 
 let movieIds = [];
 let savedMovieIds = [];
@@ -50,8 +49,10 @@ $(document).ready(function() {
 
     function searchMovies(e, pagecount) {
         e.preventDefault();
+        $("#download-button").hide();
         let page = 1;
         let searchQuery = document.getElementById("searchInput").value;
+        $('#genres').prop('selectedIndex', 0);
 
 
         $("#movieInfo").empty(); //clear out movieInfo div
@@ -86,36 +87,81 @@ $(document).ready(function() {
                     }
 
                     $("#searched").append("<div class='moviePanel'>" + posterImg + "<div class='movieText'><h1 class='movieTitle'>" +
-                        data.results[index].title + "</h1><h2 class='rating'>★" + " " + data.results[index].vote_average + "</h2><p>" + description + "</p>" + saveButton + "</div></div><button id='nextPage' type='button' name='button'>next page</button>"
+                        data.results[index].title + "</h1><h2 class='rating'>★" + " " + data.results[index].vote_average + "</h2><p>" + description + "</p>" + saveButton + "</div></div>"
                     );
                 }); //forEach
-                $("#nextPage").click(function() {
-                    page += 1;
-                });
                 console.log("ARR OF IDS CURRENTLY ON PAGE: " + movieIds);
             } //success
         }); //ajax
     }; //submit
 
+    function nowPlaying() {
+
+        $("#movieInfo").empty();
+        $("#download-button").hide();
+        $('#genres').prop('selectedIndex', 0);
+        movieIds = [];
+
+        $.ajax({
+            type: "GET",
+            url: "https://api.themoviedb.org/3/discover/movie?api_key=bf39974e4cd838de19bec9f9e381cb10&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1",
+            success: function(data) {
+                console.log(data.results[0]);
+
+                let movieData = data.results;
+                let saveButton = "<button type='button' class='save-button' onclick=saveMovie(this,movieIds,savedMovieIds)>+</button>";
+                $("#movieInfo").append("<div id='trending'><h2 class='section-title'>Now Playing</h2></div>");
+                movieData.forEach(function(element, index) {
+                    let year = movieData[index].release_date.slice(0, 4);
+                    movieIds.push(data.results[index].id + " (" + year + ")");
+                    //if id in movieIds matches id in savedMovieIds, print version without add button
+                    //else print version with button so it can be added
+
+                    let posterUrl = "https://image.tmdb.org/t/p/w640" + data.results[index].poster_path;
+                    let placeholder = "<div class='placeholder'></div>";
+
+                    if (posterUrl === "https://image.tmdb.org/t/p/w640null") {
+                        posterImg = placeholder
+                    } else {
+                        posterImg = "<img class='poster' onload='fadeIn(this)' src=" + posterUrl + " alt='movie poster' style='display:none'/>";
+                    }
+
+                    let description = data.results[index].overview;
+                    if (description.length > 300) {
+                        description = data.results[index].overview.slice(0, 300) + "...";
+                    }
+
+                    $("#trending").append("<div class='moviePanel'>" + posterImg + "<div class='movieText'><h1 class='movieTitle'>" +
+                        data.results[index].title + " (" + year + ")</h1><h2 class='rating'>★ " + " " + data.results[index].vote_average + "</h2><p>" + description + "</p>" + saveButton + "</div></div>");
+                }); //forEach
+                console.log("ARR OF IDS CURRENTLY ON PAGE: " + movieIds);
+            } //success
+        }); //ajax
+    } //onclick
+
     function savedMovies() {
 
         $("#movieInfo").empty();
+        $("#download-button").show();
+        $('#genres').prop('selectedIndex', 0);
         $("#movieInfo").append("<div id='saved'><h2 class='section-title'>Saved Movies</h2></div>");
-        let removeButton = "<button type='button' class='remove-button' onclick='removeMovie(this,movieIds,savedMovieIds)'>-</button>";
+        let removeButton = "<button type='button' class='remove-button' onclick='removeMovie(this,movieIds,savedMovieIds,savedMovieTitles)'>-</button>";
+        savedMovieTitles = [];
 
         if (savedMovieIds.length === 0) {
             $("#saved").append("<p class='no-movies-saved'>You have nothing saved!</p>")
         } else {
             savedMovieIds.forEach(function(element) { //index doesnt need to be specified
                 let id = element;
-                console.log(element);
+
 
                 $.ajax({
                     type: "GET",
                     url: "https://api.themoviedb.org/3/movie/" + element + "?api_key=bf39974e4cd838de19bec9f9e381cb10&language=en-US",
                     success: function(data) {
-
+                        console.log(data);
                         let posterUrl = "https://image.tmdb.org/t/p/w640" + data.poster_path;
+                        let title = data.title + " (" + data.release_date.slice(0, 4) + ")"
                         let placeholder = "<div class='placeholder'></div>";
 
                         if (posterUrl === "https://image.tmdb.org/t/p/w640null") {
@@ -124,11 +170,12 @@ $(document).ready(function() {
                             posterImg = "<img class='poster' onload='fadeIn(this)' src=" + posterUrl + " alt='movie poster' style='display:none'/>";
                         }
 
-                        savedMovieTitles.push(data.title)
-                        $("#searched").remove()
+
+                        savedMovieTitles.push(title);
+                        $("#searched").remove();
 
                         $("#saved").append("<div class='moviePanel'>" + posterImg + "<div class='movieText'><h1 class='movieTitle'>" +
-                            data.title + "</h1><h2 class='rating'>★ " + " " + data.vote_average + "</h2><p>" + data.overview + "</p>" + removeButton + "</div></div>");
+                            title + "</h1><h2 class='rating'>★ " + " " + data.vote_average + "</h2><p>" + data.overview + "</p>" + removeButton + "</div></div>");
                         console.log("savedMovieTitles:" + savedMovieTitles);
 
                     } //success
@@ -138,7 +185,9 @@ $(document).ready(function() {
     }; //getSavedMovies
 
     function moviesByGenre(pagecount) {
+
         $("#movieInfo").empty();
+        $("#download-button").hide();
         movieIds = [];
         let genre = $("#genres").val();
 
@@ -180,54 +229,31 @@ $(document).ready(function() {
                 $("#genre").append("<button id='increase' type='button'>NEXT PAGE</button>")
             }
         });
-
     }
 
-
-
-
-    function nowPlaying() {
-
-        $("#movieInfo").empty();
-        movieIds = [];
-
-        $.ajax({
-            type: "GET",
-            url: "https://api.themoviedb.org/3/discover/movie?api_key=bf39974e4cd838de19bec9f9e381cb10&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1",
-            success: function(data) {
-                // console.log(data.results[0].id)
-
-                let movieData = data.results;
-                let saveButton = "<button type='button' class='save-button' onclick=saveMovie(this,movieIds,savedMovieIds)>+</button>";
-                $("#movieInfo").append("<div id='trending'><h2 class='section-title'>Now Playing</h2></div>");
-                movieData.forEach(function(element, index) {
-                    movieIds.push(data.results[index].id)
-                    //if id in movieIds matches id in savedMovieIds, print version without add button
-                    //else print version with button so it can be added
-
-                    let posterUrl = "https://image.tmdb.org/t/p/w640" + data.results[index].poster_path;
-                    let placeholder = "<div class='placeholder'></div>";
-
-                    if (posterUrl === "https://image.tmdb.org/t/p/w640null") {
-                        posterImg = placeholder
-                    } else {
-                        posterImg = "<img class='poster' onload='fadeIn(this)' src=" + posterUrl + " alt='movie poster' style='display:none'/>";
-                    }
-
-                    let description = data.results[index].overview;
-                    if (description.length > 300) {
-                        description = data.results[index].overview.slice(0, 300) + "...";
-                    }
-
-                    $("#trending").append("<div class='moviePanel'>" + posterImg + "<div class='movieText'><h1 class='movieTitle'>" +
-                        data.results[index].title + "</h1><h2 class='rating'>★ " + " " + data.results[index].vote_average + "</h2><p>" + description + "</p>" + saveButton + "</div></div>");
-                }); //forEach
-                console.log("ARR OF IDS CURRENTLY ON PAGE: " + movieIds);
-            } //success
-        }); //ajax
-    } //onclick
-
 }); //document ready
+
+function downloadInnerHtml(filename, elId, mimeType) {
+    // var elHtml = document.getElementById(elId).innerHTML;
+    let list = ""
+    savedMovieTitles.forEach(function(element) {
+        list += element + "\n";
+    });
+
+    var elHtml = list;
+    var link = document.createElement('a');
+    mimeType = mimeType || 'text/plain';
+
+    link.setAttribute('download', filename);
+    link.setAttribute('href', 'data:' + mimeType + ';charset=utf-8,' + encodeURIComponent(elHtml));
+    link.click();
+}
+
+var fileName = 'TMDB-Watchlist.txt'; // You can use the .txt extension if you want
+
+$('#download-button').click(function() {
+    downloadInnerHtml(fileName, 'main', 'text/html');
+});
 
 
 function fadeIn(obj) {
@@ -246,13 +272,15 @@ function saveMovie(button, arr, storageArr) {
     console.log("STORED IDs: " + storageArr);
 }
 
-function removeMovie(button, arr, storageArr) {
+function removeMovie(button, arr, storageArr, titlesArr) {
     let parent = $(button).parent().parent();
     let index = $(button).parent().parent().index();
     storageArr.splice(index - 1, 1); //remove movie id from array
+    titlesArr.splice(index - 1, 1); //remove movie id from array
     $(parent).remove(); //remove respective div from saved movies
     console.log("index:" + index);
     console.log("STORED IDs: " + storageArr);
+    console.log("titlesArr: " + titlesArr);
 }
 
 //alert($('#thedropdown').val());
