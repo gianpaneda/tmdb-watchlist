@@ -3,21 +3,26 @@ html {
   box-sizing: border-box; }
 
 body {
-  background-color: #e8a318; }
+  background-color: #262626; }
 
 h1 {
-  margin: 10px;
+  color: #01d277;
   font-family: "Poppins", sans-serif;
-  font-size: 36px; }
+  font-size: 36px;
+  margin: 10px; }
+
+h2 {
+  color: #f2f2f2; }
 
 .section-title {
-  margin: 10px;
-  font-family: "Poppins", sans-serif; }
+  font-family: "Poppins", sans-serif;
+  margin: 10px; }
 
 .no-movies-saved {
+  color: #f2f2f2;
+  font-family: "Roboto", sans-serif;
   font-size: 20px;
-  text-align: center;
-  font-family: "Roboto", sans-serif; }
+  text-align: center; }
 
 #app {
   display: none;
@@ -28,7 +33,23 @@ h1 {
 
 #searchForm {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center; }
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #404040;
+  padding: 10px;
+  width: 100%;
+  min-width: 100px; }
+
+#genres {
+  font-size: 36px;
+  margin: 5px; }
 
 #movieInfo {
   display: flex;
@@ -39,28 +60,29 @@ h1 {
   max-width: 50%; }
 
 #searchInput {
+  background-color: #f2f2f2;
   font-family: "Poppins", sans-serif;
   font-size: 22px;
   font-weight: 800;
   vertical-align: middle;
   border-style: none;
   width: 300px;
-  height: 50px;
+  height: 30px;
   padding: 10px;
   margin: 10px; }
 
 .submit-button {
-  background-color: white;
+  background-color: #f2f2f2;
   vertical-align: middle;
   border-style: none;
   font-size: 14px;
-  height: 70px;
+  height: 50px;
   width: 50px;
   margin: 0 5px 0 -10px; }
 
-.category-button {
-  color: #ffffff;
-  background-color: #4cb1ff;
+.category-button, #download-button {
+  color: #f2f2f2;
+  background-color: #1a9cff;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   height: 50px;
@@ -69,16 +91,35 @@ h1 {
   margin: 10px 5px;
   border-style: none; }
 
-.category-button:last-child {
+.category-button:hover, #download-button:hover {
+  transition: 0.1s;
+  border: solid 3px #1a9cff;
+  font-size: 13px;
+  background-color: transparent; }
+
+#download-button {
+  background-color: #ff7d1a;
+  margin: 30px 0;
+  display: none; }
+
+#download-button:hover {
+  transition: 0.1s;
+  border: solid 3px #ff7d1a;
+  font-size: 13px;
+  background-color: transparent; }
+
+.category-button:last-child, #download-button:last-child {
   margin: 10px 10px 10px 5px; }
 
 .moviePanel {
-  margin: 10px;
+  background-color: #d9d9d9;
   display: flex;
   font-family: "Roboto", sans-serif;
-  background-color: #ffffff;
   width: 800px;
-  height: 250px; }
+  height: 250px;
+  margin: 10px; }
+  .moviePanel h1 {
+    color: #000; }
 
 .movieTitle {
   font-family: "Poppins", sans-serif;
@@ -89,6 +130,7 @@ h1 {
   /*background-color: #f3f3f3;*/ }
 
 .rating {
+  color: #1a9cff;
   font-size: 20px;
   text-align: right;
   padding: 0;
@@ -105,7 +147,7 @@ h1 {
 
 .save-button, .remove-button {
   color: #000000;
-  background-color: #ffffff;
+  background-color: #d9d9d9;
   border: none;
   font-size: 35px;
   height: 50px;
@@ -120,6 +162,9 @@ h1 {
 .poster {
   height: 250px;
   width: auto; }
+
+#logo {
+  margin: 100px; }
 
 .loader {
   background-color: blue;
