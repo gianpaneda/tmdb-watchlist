@@ -1,12 +1,10 @@
+//API KEY bf39974e4cd838de19bec9f9e381cb10
+
 $(window).on('load', function() {
     $('#app').fadeIn(1000)
     $('#app').css('display', 'flex');
     $('.spinner').fadeOut(100);
 });
-
-//API KEY bf39974e4cd838de19bec9f9e381cb10
-
-//export text file only in saved movies state
 
 let movieIds = [];
 let savedMovieIds = [];
@@ -26,7 +24,6 @@ $(document).ready(function() {
         count--;
         moviesByGenre(count);
     }
-
 
     $("#getNowPlaying").on("click", nowPlaying);
     $("#getSavedMovies").on("click", savedMovies);
@@ -135,6 +132,7 @@ $(document).ready(function() {
                         data.results[index].title + " (" + year + ")</h1><h2 class='rating'>★ " + " " + data.results[index].vote_average + "</h2><p>" + description + "</p>" + saveButton + "</div></div>");
                 }); //forEach
                 console.log("ARR OF IDS CURRENTLY ON PAGE: " + movieIds);
+
             } //success
         }); //ajax
     } //onclick
@@ -164,15 +162,20 @@ $(document).ready(function() {
                         let title = data.title + " (" + data.release_date.slice(0, 4) + ")"
                         let placeholder = "<div class='placeholder'></div>";
 
+                        savedMovieTitles.push(title);
+                        $("#searched").remove();
+
                         if (posterUrl === "https://image.tmdb.org/t/p/w640null") {
                             posterImg = placeholder
                         } else {
                             posterImg = "<img class='poster' onload='fadeIn(this)' src=" + posterUrl + " alt='movie poster' style='display:none'/>";
                         }
 
+                        let description = data.overview;
+                        if (description.length > 300) {
+                            description = data.overview.slice(0, 300) + "...";
+                        }
 
-                        savedMovieTitles.push(title);
-                        $("#searched").remove();
 
                         $("#saved").append("<div class='moviePanel'>" + posterImg + "<div class='movieText'><h1 class='movieTitle'>" +
                             title + "</h1><h2 class='rating'>★ " + " " + data.vote_average + "</h2><p>" + data.overview + "</p>" + removeButton + "</div></div>");
@@ -226,7 +229,7 @@ $(document).ready(function() {
                 });
                 console.log("ARR OF IDS CURRENTLY ON PAGE: " + movieIds);
                 $("#genre").append("<button id='decrease' type='button'>PREV PAGE</button>");
-                $("#genre").append("<button id='increase' type='button'>NEXT PAGE</button>")
+                $("#genre").append("<button id='increase' type='button'>NEXT PAGE</button>");
             }
         });
     }
