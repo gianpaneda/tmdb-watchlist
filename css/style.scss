@@ -1,5 +1,9 @@
-$primary-color: #e8a318;
-$accent-color: #4cb1ff;
+$primary-offwhite: #f2f2f2;
+$primary-med: #d9d9d9;
+$primary-dark: #262626;
+$primary-light: #01d277;
+$accent-color: #1a9cff;
+$alt-accent: #ff7d1a; //01d277
 $header-text: 'Poppins', sans-serif;
 $body-text: 'Roboto', sans-serif;
 @mixin flex-center-container() {
@@ -11,6 +15,12 @@ $body-text: 'Roboto', sans-serif;
 @mixin min-margin() {
     margin: 10px;
 }
+@mixin button-hover($color) {
+    transition: 0.1s;
+    border: solid 3px $color;
+    font-size: 13px;
+    background-color: transparent;
+}
 
 body,
 html {
@@ -18,24 +28,31 @@ html {
 }
 
 body {
-    background-color: $primary-color;
+    background-color: $primary-dark;
 }
 
 h1 {
-    @include min-margin();
+    color: $primary-light;
     font-family: $header-text;
-    font-size: 36px;   
+    font-size: 36px;
+    @include min-margin();
+}
+
+h2 {
+    font-size: 36px;
+    color: $primary-offwhite;
 }
 
 .section-title {
-    @include min-margin();
     font-family: $header-text;
+    margin: 5px 0 -5px 0;
 }
 
 .no-movies-saved {
-        font-size: 20px;
-        text-align: center;
-        font-family: $body-text;
+    color: $primary-offwhite;
+    font-family: $body-text;
+    font-size: 30px;
+    text-align: center;
 }
 
 #app {
@@ -47,8 +64,27 @@ h1 {
 }
 
 #searchForm {
+    @include flex-center-container();
+}
+
+
+
+nav {
+    @include flex-center-container();
+    background-color: #404040;
+    padding: 10px;
+    width: 100%;
+    min-width: 100px;
+}
+
+#genres {
+    font-size: 36px;
+    margin: 5px;
+}
+
+#genre {
     display: flex;
-    align-items: center;
+    @include flex-center-container();
 }
 
 #movieInfo {
@@ -59,30 +95,31 @@ h1 {
 }
 
 #searchInput {
-    font-family: $header-text;
+    background-color: $primary-offwhite;
+    font-family: $body-text;
     font-size: 22px;
     font-weight: 800;
     vertical-align: middle;
     border-style: none;
     width: 300px;
-    height: 50px;
+    height: 30px;
     padding: 10px;
     @include min-margin();
 }
 
 .submit-button {
-    background-color: white;
+    background-color: $primary-offwhite;
     vertical-align: middle;
     border-style: none;
     font-size: 14px;
-    height: 70px;
+    height: 50px;
     width: 50px;
     // padding: 18px 14px 14px 14px;
     margin: 0 5px 0 -10px;
 }
 
 .category-button {
-    color: #ffffff;
+    color: $primary-offwhite;
     background-color: $accent-color;
     font-family: $body-text;
     font-size: 14px;
@@ -93,17 +130,36 @@ h1 {
     border-style: none;
 }
 
+.category-button:hover {
+    @include button-hover($accent-color);
+}
+
+#download-button {
+    background-color: $alt-accent;
+    margin: 30px 0;
+    display: none;
+    @extend .category-button;
+}
+
+#download-button:hover {
+    @include button-hover($alt-accent);
+}
+
 .category-button:last-child {
     margin: 10px 10px 10px 5px;
 }
 
 .moviePanel {
-    @include min-margin();
+    background-color: $primary-med;
     display: flex;
     font-family: $body-text;
-    background-color: #ffffff;
     width: 800px;
     height: 250px;
+    @include min-margin();
+
+    h1 {
+        color: #000;
+    }
 }
 
 .movieTitle {
@@ -116,6 +172,7 @@ h1 {
 }
 
 .rating {
+    color: $accent-color;
     font-size: 20px;
     text-align: right;
     padding: 0;
@@ -134,7 +191,7 @@ h1 {
 
 .save-button {
     color: #000000;
-    background-color: #ffffff;
+    background-color: $primary-med;
     border: none;
     font-size: 35px;
     height: 50px;
@@ -146,8 +203,24 @@ h1 {
     @extend .save-button;
 }
 
+.page-button {
+    font-size: 14px;
+    text-align: center;
+    background-color: $primary-offwhite;
+    color: $primary-dark;
+    border-style: none;
+    height: 50px;
+    width: 100px;
+    margin: 10px;
+}
+
+.page-button:hover {
+    @include button-hover($primary-offwhite);
+    color: $primary-offwhite;
+}
+
 .placeholder {
-    background-color: #e2dcce;
+    background-color: #828282;
     min-height: 250px;
     min-width: 166.66px;
 }
@@ -155,6 +228,11 @@ h1 {
 .poster {
     height: 250px;
     width: auto;
+}
+
+#logo {
+    margin: 100px;
+    height: 110px;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +251,6 @@ h1 {
     -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
     animation: sk-rotateplane 1.2s infinite ease-in-out;
 }
-
 @-webkit-keyframes sk-rotateplane {
     0% {
         -webkit-transform: perspective(120px);
