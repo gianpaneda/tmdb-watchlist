@@ -12,16 +12,17 @@ h1 {
   margin: 10px; }
 
 h2 {
+  font-size: 36px;
   color: #f2f2f2; }
 
 .section-title {
   font-family: "Poppins", sans-serif;
-  margin: 10px; }
+  margin: 5px 0 -5px 0; }
 
 .no-movies-saved {
   color: #f2f2f2;
   font-family: "Roboto", sans-serif;
-  font-size: 20px;
+  font-size: 30px;
   text-align: center; }
 
 #app {
@@ -51,6 +52,13 @@ nav {
   font-size: 36px;
   margin: 5px; }
 
+#genre {
+  display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; }
+
 #movieInfo {
   display: flex;
   flex-wrap: wrap;
@@ -61,7 +69,7 @@ nav {
 
 #searchInput {
   background-color: #f2f2f2;
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 22px;
   font-weight: 800;
   vertical-align: middle;
@@ -154,8 +162,25 @@ nav {
   width: 50px;
   margin: auto 0 0 auto; }
 
+.page-button {
+  font-size: 14px;
+  text-align: center;
+  background-color: #f2f2f2;
+  color: #262626;
+  border-style: none;
+  height: 50px;
+  width: 100px;
+  margin: 10px; }
+
+.page-button:hover {
+  transition: 0.1s;
+  border: solid 3px #f2f2f2;
+  font-size: 13px;
+  background-color: transparent;
+  color: #f2f2f2; }
+
 .placeholder {
-  background-color: #e2dcce;
+  background-color: #828282;
   min-height: 250px;
   min-width: 166.66px; }
 
@@ -164,7 +189,8 @@ nav {
   width: auto; }
 
 #logo {
-  margin: 100px; }
+  margin: 100px;
+  height: 110px; }
 
 .loader {
   background-color: blue;
