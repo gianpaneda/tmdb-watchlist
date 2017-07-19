@@ -114,7 +114,7 @@ $(document).ready(function() {
                 let movieData = data.results;
                 let saveButton = "<button type='button' class='save-button' onclick=saveMovie(this,movieIds,savedMovieIds)>+</button>";
 
-                $("#movieInfo").append("<div id='trending'><h2 class='section-title'>Now Playing</h2></div>");
+                $("#movieInfo").append("<div id='trending'><h2 class='section-title'>Trending</h2></div>");
                 movieData.forEach(function(element, index) {
                     let year = movieData[index].release_date.slice(0, 4);
                     let description = data.results[index].overview;
