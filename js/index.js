@@ -196,6 +196,7 @@ $(document).ready(function() {
     function moviesByGenre(pagecount) {
 
         $("#movieInfo").empty();
+        $("#searchInput").val("");
         $("#download-button").hide();
         movieIds = [];
         let genre = $("#genres").val();
